@@ -42,29 +42,39 @@ public class pacemakerAPI
   {
     return userIndex.get(id);
   }
-  
+
   public Activity addActivity(Long userId, String type, String location, double distance) 
   {
-    
+
     Activity act = new Activity(type, location, distance);
-    activityIndex.put(act.id, act);
-    
     User u = userIndex.get(userId);
-    u.activities.put(act.id, act);
-    
+
+    if(u != null) 
+    {
+      u.activities.put(act.id, act);
+      activityIndex.put(act.id, act);
+    }
+
     return act;
-    
   }
-  
+
+  public Activity getActivity (Long id)
+  {
+    return activityIndex.get(id);
+  }
+
   public Location addLocation(Long activityId, double lat, double lon) 
   {
-    
+
     Location location = new Location(activityId, lat, lon);
     Activity act = activityIndex.get(activityId);
-    act.route.add(location);
-    
+    if(act != null) 
+    {
+      act.route.add(location);
+    }
+
     return location;
-    
+
   }
 
   public void deleteUser(Long id) 

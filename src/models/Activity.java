@@ -2,6 +2,7 @@ package models;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,6 @@ public class Activity
   @Override  
   public int hashCode()  
   {  
-     return Objects.hashCode(this.type, this.location, this.distance);  
+     return Objects.hashCode(this.id, this.type, this.location, this.distance);  
   }
 }

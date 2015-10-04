@@ -2,15 +2,22 @@ package models;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
+import com.google.common.base.Objects;
+
+
 public class Location
 {
-
+  
+  static Long counter=0l;
+  public Long id;
+  
   public Long activityId;
   public double latitude;
   public double longitude;
 
   public Location(long aid, double lat, double longitude) {
     
+    this.id = counter++;
     this.activityId = aid;
     this.latitude = lat;
     this.longitude = longitude;
@@ -24,4 +31,10 @@ public class Location
         .addValue(longitude)
         .toString();
   }
+  
+  @Override  
+  public int hashCode()  
+  {  
+     return Objects.hashCode(this.id, this.latitude, this.longitude);  
+  } 
 }
