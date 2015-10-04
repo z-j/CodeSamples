@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -60,9 +61,26 @@ public class Main
     paceApi.addLocation(activityId, latitude, longitude);
   }
 
-  public static void main(String[] args) throws IOException
+  public static void main(String[] args) 
   {
-    Shell shell = ShellFactory.createConsoleShell("pc", "Welcome to pcemaker-console - ?help for instructions", new Main());
+    
+    Main main = new Main();
+    
+    try {
+    File datastore = new File("datastore.xml");
+    if(datastore.isFile()) 
+    {
+      main.paceApi.load(datastore);
+        
+    }
+    
+    Shell shell = ShellFactory.createConsoleShell("pc", "Welcome to pcemaker-console - ?help for instructions", main);
     shell.commandLoop(); 
+    
+    main.paceApi.store(datastore);
+    
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
   }
 }
