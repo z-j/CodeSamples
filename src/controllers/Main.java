@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 
 import com.google.common.base.Optional;
@@ -11,10 +10,11 @@ import asg.cliche.Param;
 import asg.cliche.Shell;
 import asg.cliche.ShellFactory;
 import models.User;
+import utils.XMLSerializer;
 
 public class Main
 {
-  pacemakerAPI paceApi = new pacemakerAPI();
+  pacemakerAPI paceApi;
 
   @Command(description="Create a new User")
   public void createUser (@Param(name="first name") String firstName, @Param(name="last name") String lastName, 
@@ -66,13 +66,18 @@ public class Main
     
     Main main = new Main();
     
+    
     try {
     File datastore = new File("datastore.xml");
+    main.paceApi = new pacemakerAPI(new XMLSerializer(datastore));
+    
     if(datastore.isFile()) 
     {
       main.paceApi.load(datastore);
         
     }
+    
+    main.paceApi.printSize();
     
     Shell shell = ShellFactory.createConsoleShell("pc", "Welcome to pcemaker-console - ?help for instructions", main);
     shell.commandLoop(); 

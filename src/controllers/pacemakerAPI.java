@@ -15,13 +15,32 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import models.Activity;
 import models.Location;
 import models.User;
+import utils.Serializer;
 
 public class pacemakerAPI
 {
+  
+  public Serializer serializer;
+  
   private Map<Long, User>     userIndex       = new HashMap<>();
   private Map<String, User>   emailIndex      = new HashMap<>();
   private Map<Long, Activity> activityIndex   = new HashMap<>();
 
+  
+  public pacemakerAPI(Serializer serializer) 
+  {
+  
+    this.serializer = serializer;
+  }
+  
+  public void printSize() 
+  {
+    System.out.println(userIndex);
+    System.out.println(userIndex.size()+","+emailIndex.size()+","+activityIndex.size());
+  }
+      
+  
+  
   public Collection<User> getUsers ()
   {
     return userIndex.values();
@@ -88,34 +107,22 @@ public class pacemakerAPI
   @SuppressWarnings("unchecked")
   void load(File file) throws Exception
   {
-    ObjectInputStream is = null;
-    try
-    {
-      XStream xstream = new XStream(new DomDriver());
-      is = xstream.createObjectInputStream(new FileReader(file));
-      userIndex       = (Map<Long, User>)     is.readObject();
-      emailIndex      = (Map<String, User>)   is.readObject();
-      activityIndex = (Map<Long, Activity>) is.readObject();
-    }
-    finally
-    {
-      if (is != null)
-      {
-        is.close();
-      }
-    }
+    serializer.read();
+    activityIndex = (Map<Long, Activity>)serializer.pop();
+    emailIndex = (Map<String, User>) serializer.pop();    
+    userIndex = (Map<Long, User>) serializer.pop();
+    System.out.println("loaded:"+userIndex.size()+","+emailIndex.size()+","+activityIndex.size());
   }
 
   void store(File file) throws Exception
   {
-    XStream xstream = new XStream(new DomDriver());
-    ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter(file));
-    out.writeObject(userIndex);
-    out.writeObject(emailIndex);
-    out.writeObject(activityIndex);
     
-    System.out.println(userIndex.size()+","+emailIndex.size()+","+activityIndex.size());
-    out.close(); 
+    serializer.push(userIndex);
+    serializer.push(emailIndex);
+    serializer.push(activityIndex);
+    
+    serializer.write();
+    System.out.println("storage:"+userIndex.size()+","+emailIndex.size()+","+activityIndex.size());
   }
 
   public void deleteUser(Long id) 
