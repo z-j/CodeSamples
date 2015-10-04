@@ -1,7 +1,7 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 
 import asg.cliche.Command;
 import asg.cliche.Param;
@@ -30,7 +30,7 @@ public class Main
   @Command(description="Get all users details")
   public void getUsers ()
   {
-    List<User> users = paceApi.getUsers();
+    Collection<User> users = paceApi.getUsers();
     System.out.println(users);
   }
 
