@@ -45,6 +45,20 @@ public class Main
       paceApi.deleteUser(user.get().id);
     }
   }
+  
+  @Command(description="Add Activity")
+  public void addActivity (@Param(name="user-id") Long userId, @Param(name="type") String type, @Param(name="location") String location, 
+      @Param(name="distance") double distance)
+  {
+    paceApi.addActivity(userId, type, location, distance);
+  }
+  
+  @Command(description="Add Location")
+  public void addLocation (@Param(name="activity-id") Long activityId, @Param(name="latitide") double latitude, 
+      @Param(name="longitude") double longitude)
+  {
+    paceApi.addLocation(activityId, latitude, longitude);
+  }
 
   public static void main(String[] args) throws IOException
   {
