@@ -10,7 +10,7 @@ import asg.cliche.Param;
 import asg.cliche.Shell;
 import asg.cliche.ShellFactory;
 import models.User;
-import utils.XMLSerializer;
+import utils.JSONSerializer;
 
 public class Main
 {
@@ -69,7 +69,7 @@ public class Main
     
     try {
     File datastore = new File("datastore.xml");
-    main.paceApi = new pacemakerAPI(new XMLSerializer(datastore));
+    main.paceApi = new pacemakerAPI(new JSONSerializer(datastore));
     
     if(datastore.isFile()) 
     {
