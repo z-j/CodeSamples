@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.base.Optional;
+
 import models.Activity;
 import models.Location;
 import models.User;
@@ -63,19 +65,17 @@ public class pacemakerAPI
     return userIndex.get(id);
   }
 
-  public Activity addActivity(Long userId, String type, String location, double distance) 
+  public Activity addActivity(Long id, String type, String location, double distance)
   {
-
-    Activity act = new Activity(type, location, distance);
-    User u = userIndex.get(userId);
-
-    if(u != null) 
+    Activity activity = null;
+    Optional<User> user = Optional.fromNullable(userIndex.get(id));
+    if (user.isPresent())
     {
-      u.activities.put(act.id, act);
-      activityIndex.put(act.id, act);
+      activity = new Activity (type, location, distance);
+      user.get().activities.put(activity.id, activity);
+      activityIndex.put(activity.id, activity);
     }
-
-    return act;
+    return activity;
   }
 
   public Activity getActivity (Long id)
