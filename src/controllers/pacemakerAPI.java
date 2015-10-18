@@ -98,7 +98,7 @@ public class pacemakerAPI
   }
   
   @SuppressWarnings("unchecked")
-  void load(File file) throws Exception
+  public void load() throws Exception
   {
     serializer.read();
     activityIndex = (Map<Long, Activity>)serializer.pop();
@@ -107,7 +107,7 @@ public class pacemakerAPI
     System.out.println("loaded:"+userIndex.size()+","+emailIndex.size()+","+activityIndex.size());
   }
 
-  void store(File file) throws Exception
+  public void store() throws Exception
   {
     
     serializer.push(userIndex);

@@ -73,7 +73,7 @@ public class Main
     
     if(datastore.isFile()) 
     {
-      main.paceApi.load(datastore);
+      main.paceApi.load();
         
     }
     
@@ -82,7 +82,7 @@ public class Main
     Shell shell = ShellFactory.createConsoleShell("pc", "Welcome to pcemaker-console - ?help for instructions", main);
     shell.commandLoop(); 
     
-    main.paceApi.store(datastore);
+    main.paceApi.store();
     
     } catch(Exception e) {
       e.printStackTrace();
