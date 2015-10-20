@@ -2,8 +2,8 @@ package models;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.common.base.Objects;
 
@@ -13,7 +13,8 @@ public class User
   public String lastName;
   public String email;
   public String password;
-  public Map<Long, Activity> activities = new HashMap<>();
+  //public Map<Long, Activity> activities = new HashMap<>();
+  public List<Activity> activities = new ArrayList<Activity>();
   
   static Long counter = 0l;
   public Long id;
@@ -61,7 +62,8 @@ public class User
       return Objects.equal(firstName, other.firstName) 
           && Objects.equal(lastName,  other.lastName)
           && Objects.equal(email,     other.email)
-          && Objects.equal(password,  other.password);
+          && Objects.equal(password,  other.password)
+          &&  Objects.equal(activities,  other.activities);
     }
     else
     {

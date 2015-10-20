@@ -1,8 +1,11 @@
 package controllers;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Optional;
@@ -54,10 +57,29 @@ public class pacemakerAPI
     emailIndex.put(email, user);
     return user;
   }
+  
+  public boolean deleteUser(long id) 
+  {
+    if(userIndex.get(id) != null) {
+      String email = userIndex.get(id).email;
+      userIndex.remove(id);
+      emailIndex.remove(email);
+      return true;
+    } else {
+      System.out.println("user is null");
+      return false;
+    }
+    
+  }
 
   public User getUserByEmail(String email) 
   {
     return emailIndex.get(email);
+  }
+  
+  public User getUserById(Long id) 
+  {
+    return userIndex.get(id);
   }
 
   public User getUser(Long id) 
@@ -72,10 +94,34 @@ public class pacemakerAPI
     if (user.isPresent())
     {
       activity = new Activity (type, location, distance);
-      user.get().activities.put(activity.id, activity);
+      //user.get().activities.put(activity.id, activity);
+      user.get().activities.add(activity);
       activityIndex.put(activity.id, activity);
     }
     return activity;
+  }
+  
+  public List<User> getSortedActivities(Long id, String SortBy)
+  {
+   
+    Iterator<Long> s = userIndex.keySet().iterator();
+    List users = new ArrayList<User>();
+    
+    while(s.hasNext()) {
+      
+      long userId = s.next();
+      System.out.println(userId);
+      User u = userIndex.get(userId);
+      if(u.activities.get(0) != null) {
+      System.out.println(u.activities.size() + "," + u.activities.get(0).id);
+      }
+      Collections.sort(u.activities, Activity.getSortedOnType());
+      if(u.activities.get(0) != null) {
+        System.out.println(u.activities.size() + "," + u.activities.get(0).id);
+        }
+      users.add(u);
+    }
+    return users;
   }
 
   public Activity getActivity (Long id)
@@ -118,9 +164,4 @@ public class pacemakerAPI
     System.out.println("storage:"+userIndex.size()+","+emailIndex.size()+","+activityIndex.size());
   }
 
-  public void deleteUser(Long id) 
-  {
-    User user = userIndex.remove(id);
-    emailIndex.remove(user.email);
-  }
 }

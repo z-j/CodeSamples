@@ -23,28 +23,25 @@ public class Main
     paceApi.createUser(firstName, lastName, email, password);
   }
 
-  @Command(description="Get a Users details")
-  public void getUser (@Param(name="email") String email)
-  {
-    User user = paceApi.getUserByEmail(email);
-    System.out.println(user);
-  }
-
   @Command(description="Get all users details")
-  public void getUsers ()
+  public void listUsers ()
   {
     Collection<User> users = paceApi.getUsers();
     System.out.println(users);
   }
 
-  @Command(description="Delete a User")
-  public void deleteUser (@Param(name="email") String email)
+  @Command(description="Get user details")
+  public void listUser (@Param(name="email") String email)
   {
-    Optional<User> user = Optional.fromNullable(paceApi.getUserByEmail(email));
-    if (user.isPresent())
-    {
-      paceApi.deleteUser(user.get().id);
-    }
+    User user = paceApi.getUserByEmail(email);
+    System.out.println(user);
+  }
+  
+  @Command(description="Get user by id")
+  public void listUser (@Param(name="id") Long id)
+  {
+    User user = paceApi.getUserById(id);
+    System.out.println(user.toString());
   }
   
   @Command(description="Add Activity")
@@ -54,11 +51,37 @@ public class Main
     paceApi.addActivity(userId, type, location, distance);
   }
   
+  @Command(description="Get all users details")
+  public void listActivities (@Param(name="user-id") Long userId, @Param(name="SortBy") String sortBy)
+  {
+    Collection<User> users = paceApi.getSortedActivities(userId,  "");
+    System.out.println(users);
+  }
+  
   @Command(description="Add Location")
   public void addLocation (@Param(name="activity-id") Long activityId, @Param(name="latitide") double latitude, 
       @Param(name="longitude") double longitude)
   {
     paceApi.addLocation(activityId, latitude, longitude);
+  }
+  
+  @Command(description="Delete User")
+  public void deleteUser (@Param(name="id") long id)
+  {
+    System.out.println("am I here?");
+    paceApi.deleteUser(id);
+  }
+  
+  @Command(description="Delete User")
+  public void deleteUserbyEmail (@Param(name="email") String email)
+  {
+    System.out.println("am I here? email");
+    Optional<User> user = Optional.fromNullable(paceApi.getUserByEmail(email));
+    if (user.isPresent())
+    {
+      System.out.println("user is present"+user.get().id);
+      paceApi.deleteUser(user.get().id);
+    }
   }
 
   public static void main(String[] args) 

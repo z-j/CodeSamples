@@ -22,19 +22,21 @@ public class PersistenceTest
   @Test
   public void testPopulate()
   { 
+    pacemaker = new pacemakerAPI(null);
     assertEquals(pacemaker.getUsers().size(), 0);
     populate (pacemaker);
 
+    System.out.println(users.length+","+  pacemaker.getUsers().size());
     assertEquals(users.length, pacemaker.getUsers().size());
     assertEquals(2, pacemaker.getUserByEmail(users[0].email).activities.size());
     assertEquals(2, pacemaker.getUserByEmail(users[1].email).activities.size());   
-    Long activityID = pacemaker.getUserByEmail(users[0].email).activities.keySet().iterator().next();
+    Long activityID = pacemaker.getUserByEmail(users[0].email).activities.get(0).id;
     assertEquals(locations.length, pacemaker.getActivity(activityID).route.size());   
   }
 
   void populate (pacemakerAPI pacemaker)
   {
-    pacemaker = new pacemakerAPI(null);
+    //pacemaker = new pacemakerAPI(null);
 
     for (User user : users)
     {
@@ -65,6 +67,7 @@ public class PersistenceTest
   @Test
   public void testXMLSerializer() throws Exception
   { 
+    System.out.println("test xml serilizaer");
     String datastoreFile = "testdatastore.xml";
     deleteFile (datastoreFile);
 
