@@ -29,7 +29,7 @@ public class JSONSerializer implements Serializer
 
   public Object pop()
   {
-    return stack.pop(); 
+    return stack.pop();
   }
 
   @SuppressWarnings("unchecked")
@@ -65,10 +65,9 @@ public class JSONSerializer implements Serializer
       xstream.setMode(XStream.NO_REFERENCES);
       xstream.alias("stack", Stack.class);
       os.writeObject(stack);
-      /*while (!stack.empty())
-      {
-        os.writeObject(stack.pop());  
-      }*/
+      /*
+       * while (!stack.empty()) { os.writeObject(stack.pop()); }
+       */
     }
     finally
     {

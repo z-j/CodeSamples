@@ -17,10 +17,10 @@ public class UserTest
   @Test
   public void testCreate()
   {
-    assertEquals ("marge",               users[0].firstName);
-    assertEquals ("simpson",             users[0].lastName);
-    assertEquals ("marge@simpson.com",   users[0].email);   
-    assertEquals ("secret",              users[0].password);   
+    assertEquals("marge", users[0].firstName);
+    assertEquals("simpson", users[0].lastName);
+    assertEquals("marge@simpson.com", users[0].email);
+    assertEquals("secret", users[0].password);
   }
 
   @Test
@@ -34,32 +34,30 @@ public class UserTest
     {
       ids.add(user.id);
     }
-    assertEquals (users.length, ids.size());
+    assertEquals(users.length, ids.size());
   }
 
   @Test
   public void testUsers()
   {
     pacemakerAPI pacemaker = new pacemakerAPI(null);
-    
+
     for (User user : users)
     {
       pacemaker.createUser(user.firstName, user.lastName, user.email, user.password);
     }
-    assertEquals (users.length, pacemaker.getUsers().size());
-    for (User user: users)
+    assertEquals(users.length, pacemaker.getUsers().size());
+    for (User user : users)
     {
       User eachUser = pacemaker.getUserByEmail(user.email);
-      assertEquals (user, eachUser);
+      assertEquals(user, eachUser);
       assertNotSame(user, eachUser);
     }
   }
-  
-  
-  
+
   @Test
   public void testToString()
   {
-    assertEquals ("User{" + users[0].id + ", marge, simpson, secret, marge@simpson.com, {}}", users[0].toString());
+    assertEquals("User{" + users[0].id + ", marge, simpson, secret, marge@simpson.com, {}}", users[0].toString());
   }
 }

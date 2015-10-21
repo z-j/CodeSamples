@@ -28,7 +28,7 @@ public class XMLSerializer implements Serializer
 
   public Object pop()
   {
-    return stack.pop(); 
+    return stack.pop();
   }
 
   @SuppressWarnings("unchecked")
@@ -41,20 +41,14 @@ public class XMLSerializer implements Serializer
       XStream xstream = new XStream(new DomDriver());
       is = xstream.createObjectInputStream(new FileReader(file));
       stack = (Stack) is.readObject();
-      /*Object obj = is.readObject();
-      while (obj != null)
-      {
-        stack.push(obj);
-        try 
-        {
-          obj = is.readObject();
-        } catch(java.io.EOFException ex) 
-        {
-          System.out.println("eof exception, ignoring and setting obj = null");
-          obj = null;
-        }
-        
-      }*/
+      /*
+       * Object obj = is.readObject(); while (obj != null) { stack.push(obj);
+       * try { obj = is.readObject(); } catch(java.io.EOFException ex) {
+       * System.out.println("eof exception, ignoring and setting obj = null");
+       * obj = null; }
+       * 
+       * }
+       */
     }
     finally
     {
@@ -74,10 +68,9 @@ public class XMLSerializer implements Serializer
       XStream xstream = new XStream(new DomDriver());
       os = xstream.createObjectOutputStream(new FileWriter(file));
       os.writeObject(stack);
-      /*while (!stack.empty())
-      {
-        os.writeObject(stack.pop());  
-      }*/
+      /*
+       * while (!stack.empty()) { os.writeObject(stack.pop()); }
+       */
     }
     finally
     {

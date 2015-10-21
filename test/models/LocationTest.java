@@ -14,8 +14,8 @@ public class LocationTest
   @Test
   public void testCreate()
   {
-    assertEquals (23.3d, locations[0].latitude, 0.01);
-    assertEquals (33.3d, locations[0].longitude, 0.01);
+    assertEquals(23.3d, locations[0].latitude, 0.01);
+    assertEquals(33.3d, locations[0].longitude, 0.01);
   }
 
   @Test
@@ -28,6 +28,6 @@ public class LocationTest
   public void testToString()
   {
     System.out.println(locations[0].toString());
-    assertEquals ("Location{1, 23.3, 33.3}", locations[0].toString());
+    assertEquals("Location{1, 23.3, 33.3}", locations[0].toString());
   }
 }
