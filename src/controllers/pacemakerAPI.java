@@ -1,12 +1,9 @@
 package controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.google.common.base.Optional;
@@ -34,8 +31,8 @@ public class pacemakerAPI
 
   public void printSize()
   {
-    System.out.println(userIndex);
-    System.out.println(userIndex.size() + "," + emailIndex.size() + "," + activityIndex.size());
+    //System.out.println(userIndex);
+    //System.out.println(userIndex.size() + "," + emailIndex.size() + "," + activityIndex.size());
   }
 
   public Collection<User> getUsers()
@@ -74,7 +71,7 @@ public class pacemakerAPI
     }
     else
     {
-      System.out.println("user is null");
+      //System.out.println("user is null");
       return false;
     }
   }
@@ -111,24 +108,15 @@ public class pacemakerAPI
   public User getSortedActivities(Long id, String sortBy)
   {
 
-    //Iterator<Long> s = userIndex.keySet().iterator();
-    //while (s.hasNext()){
     User u = userIndex.get(id);
-    System.out.println("user id"+id);
 
     if (u !=null && u.activities != null && u.activities.size() > 0)
     {
-      System.out.println(u.activities.size() + "," + u.activities.get(0).id);
+      //System.out.println(u.activities.size() + "," + u.activities.get(0).id);
       this.sortActivities(u, sortBy);
-
-
-      System.out.println(u.activities.size() + "," + u.activities.get(0).id);
     } else {
-      System.out.println("either null or 0 size");
+      //System.out.println("either null or 0 size");
     }
-
-
-    //}
     return u;
   }
 
@@ -136,13 +124,13 @@ public class pacemakerAPI
 
     if("type".equals(sortBy)) {
       Collections.sort(u.activities, Activity.getSortedOnType());
-    } else if("date".equals(sortBy)) {
+    } else if("date".equalsIgnoreCase(sortBy)) {
       Collections.sort(u.activities, Activity.getSortedOnDate());
-    } else if("location".equals(sortBy)) {
+    } else if("location".equalsIgnoreCase(sortBy)) {
       Collections.sort(u.activities, Activity.getSortedOnLocation());
-    } else if("distance".equals(sortBy)) {
+    } else if("distance".equalsIgnoreCase(sortBy)) {
       Collections.sort(u.activities, Activity.getSortedOnDistance());
-    } else if("duration".equals(sortBy)) {
+    } else if("duration".equalsIgnoreCase(sortBy)) {
       Collections.sort(u.activities, Activity.getSortedOnDuration());
     } else {
       Print.printNoData("Sort By Parameter is not correct.");
@@ -176,7 +164,7 @@ public class pacemakerAPI
     activityIndex = (Map<Long, Activity>) serializer.pop();
     emailIndex = (Map<String, User>) serializer.pop();
     userIndex = (Map<Long, User>) serializer.pop();
-    System.out.println("loaded:" + userIndex.size() + "," + emailIndex.size() + "," + activityIndex.size());
+    //System.out.println("loaded:" + userIndex.size() + "," + emailIndex.size() + "," + activityIndex.size());
   }
 
   public void store() throws Exception
@@ -187,7 +175,7 @@ public class pacemakerAPI
     serializer.push(activityIndex);
 
     serializer.write();
-    System.out.println("storage:" + userIndex.size() + "," + emailIndex.size() + "," + activityIndex.size());
+    //System.out.println("storage:" + userIndex.size() + "," + emailIndex.size() + "," + activityIndex.size());
   }
   
 

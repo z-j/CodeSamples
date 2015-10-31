@@ -1,4 +1,4 @@
-package models;
+package controllers;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controllers.pacemakerAPI;
+import models.Activity;
+import models.Location;
+import models.User;
+
 import static models.Fixtures.users;
 import static models.Fixtures.activities;
 import static models.Fixtures.locations;
@@ -66,7 +70,7 @@ public class pacemakerAPITest
   {
     User marge = pacemaker.getUserByEmail("marge@simpson.com");
     Activity activity = pacemaker.addActivity(marge.id, activities[0].type, activities[0].location,
-        activities[0].distance);
+        activities[0].distance, activities[0].strDate, activities[0].strDuration);
     Activity returnedActivity = pacemaker.getActivity(activity.id);
     assertEquals(activities[0], returnedActivity);
     assertNotSame(activities[0], returnedActivity);
@@ -77,7 +81,7 @@ public class pacemakerAPITest
   {
     User marge = pacemaker.getUserByEmail("marge@simpson.com");
     Long activityId = pacemaker.addActivity(marge.id, activities[0].type, activities[0].location,
-        activities[0].distance).id;
+        activities[0].distance, activities[0].strDate, activities[0].strDuration).id;
 
     for (Location location : locations)
     {

@@ -16,7 +16,7 @@ public class Print
   public static void printUsers(Collection<User> users)
   {
 
-    String[] header = { "First Name", "Last Name", "Email", "Password" };
+    String[] header = { "Id", "First Name", "Last Name", "Email", "Password" };
 
     if (users == null || users.size() == 0)
     {
@@ -24,20 +24,45 @@ public class Print
       return;
     }
 
-    String[][] data = new String[users.size()][4];
+    String[][] data = new String[users.size()][5];
     int index = 0;
 
     for (User u : users)
     {
 
-      data[index][0] = u.firstName;
-      data[index][1] = u.lastName;
-      data[index][2] = u.email;
-      data[index][3] = u.password;
+      data[index][0] = String.valueOf(u.id);
+      data[index][1] = u.firstName;
+      data[index][2] = u.lastName;
+      data[index][3] = u.email;
+      data[index][4] = u.password;
       index++;
     }
 
     ASCIITable.getInstance().printTable(header, data);
+
+  }
+
+  public static void printUser(User u)
+  {
+
+    String[] header = { "Id", "First Name", "Last Name", "Email", "Password" };
+
+    String[][] data = new String[1][5];
+ 
+    if (u != null)
+    {
+      data[0][0] = String.valueOf(u.id);
+      data[0][1] = u.firstName;
+      data[0][2] = u.lastName;
+      data[0][3] = u.email;
+      data[0][4] = u.password;
+      ASCIITable.getInstance().printTable(header, data);
+    } else {
+      printNoData("No Users Found");
+
+    }
+
+    
 
   }
 
@@ -69,10 +94,10 @@ public class Print
     int index=0;
 
     if(user.activities != null) {
-      
+
       data = new String [user.activities.size()][8];
       List<Activity> activities = user.activities;
-      
+
       for(Activity act : activities) {
         data[index][0] = String.valueOf(user.id);
         data[index][1] = user.firstName;
@@ -87,7 +112,7 @@ public class Print
       ASCIITable.getInstance().printTable(header, data);
     }
   }
-  
+
   private static String convertDateToString(Date d) 
   {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

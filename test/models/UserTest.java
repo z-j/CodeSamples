@@ -58,6 +58,7 @@ public class UserTest
   @Test
   public void testToString()
   {
-    assertEquals("User{" + users[0].id + ", marge, simpson, secret, marge@simpson.com, {}}", users[0].toString());
+    System.out.println(users[0].toString());
+    assertEquals("User{" + users[0].id + ", marge, simpson, secret, marge@simpson.com, []}", users[0].toString());
   }
 }

@@ -14,6 +14,10 @@ public class Location
   public double latitude;
   public double longitude;
 
+  public Location() {
+    
+  }
+  
   public Location(long aid, double lat, double longitude)
   {
 

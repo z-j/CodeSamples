@@ -27,7 +27,7 @@ public class LocationTest
   @Test
   public void testToString()
   {
-    System.out.println(locations[0].toString());
+   // System.out.println(locations[0].toString());
     assertEquals("Location{1, 23.3, 33.3}", locations[0].toString());
   }
 }

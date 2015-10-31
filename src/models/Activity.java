@@ -21,6 +21,10 @@ public class Activity
   public double distance;
   public Date date;
   public int duration;
+  
+  //for testing purposes
+  public String strDate;
+  public String strDuration;
 
   public List<Location> route = new ArrayList<>();
 
@@ -35,6 +39,12 @@ public class Activity
     this.distance = distance;
     this.date = convertStringToDate(date);
     this.duration = convertStringTimeToSeconds(duration);
+    this.strDate = date;
+    this.strDuration = duration;
+  }
+  
+  public Activity() {
+    
   }
 
   @Override
@@ -152,5 +162,9 @@ public class Activity
       System.out.println("Time could not be parsed. For now setting the current as 0.");
       return 0;
     }
+  }
+  
+  public List<Location> getRoute() {
+    return this.route;
   }
 }

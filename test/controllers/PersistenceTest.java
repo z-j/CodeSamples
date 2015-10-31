@@ -1,4 +1,4 @@
-package models;
+package controllers;
 
 import static models.Fixtures.activities;
 import static models.Fixtures.locations;
@@ -10,6 +10,9 @@ import java.io.File;
 import org.junit.Test;
 
 import controllers.pacemakerAPI;
+import models.Activity;
+import models.Location;
+import models.User;
 import utils.Serializer;
 import utils.XMLSerializer;
 
@@ -24,7 +27,7 @@ public class PersistenceTest
     assertEquals(pacemaker.getUsers().size(), 0);
     populate(pacemaker);
 
-    System.out.println(users.length + "," + pacemaker.getUsers().size());
+    //System.out.println(users.length + "," + pacemaker.getUsers().size());
     assertEquals(users.length, pacemaker.getUsers().size());
     assertEquals(2, pacemaker.getUserByEmail(users[0].email).activities.size());
     assertEquals(2, pacemaker.getUserByEmail(users[1].email).activities.size());
@@ -42,11 +45,14 @@ public class PersistenceTest
     }
     User user1 = pacemaker.getUserByEmail(users[0].email);
     Activity activity = pacemaker.addActivity(user1.id, activities[0].type, activities[0].location,
-        activities[0].distance);
-    pacemaker.addActivity(user1.id, activities[1].type, activities[1].location, activities[1].distance);
+        activities[0].distance, activities[0].strDate, activities[0].strDuration);
+    pacemaker.addActivity(user1.id, activities[1].type, activities[1].location, activities[1].distance,
+        activities[1].strDate, activities[1].strDuration);
     User user2 = pacemaker.getUserByEmail(users[1].email);
-    pacemaker.addActivity(user2.id, activities[2].type, activities[2].location, activities[2].distance);
-    pacemaker.addActivity(user2.id, activities[3].type, activities[3].location, activities[3].distance);
+    pacemaker.addActivity(user2.id, activities[2].type, activities[2].location, activities[2].distance,
+        activities[2].strDate, activities[2].strDuration);
+    pacemaker.addActivity(user2.id, activities[3].type, activities[3].location, activities[3].distance,
+        activities[3].strDate, activities[3].strDuration);
 
     for (Location location : locations)
     {
@@ -66,7 +72,7 @@ public class PersistenceTest
   @Test
   public void testXMLSerializer() throws Exception
   {
-    System.out.println("test xml serilizaer");
+    //System.out.println("test xml serilizaer");
     String datastoreFile = "testdatastore.xml";
     deleteFile(datastoreFile);
 
