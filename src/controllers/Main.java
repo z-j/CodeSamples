@@ -49,9 +49,10 @@ public class Main
 
   @Command(description = "Add Activity")
   public void addActivity(@Param(name = "user-id") Long userId, @Param(name = "type") String type,
-      @Param(name = "location") String location, @Param(name = "distance") double distance)
+      @Param(name = "location") String location, @Param(name = "distance") double distance,
+      @Param(name = "date (dd:MM:yyyy HH:mm:ss)") String date, @Param(name = "duration (HH:mm:ss)") String duration)
   {
-    paceApi.addActivity(userId, type, location, distance);
+    paceApi.addActivity(userId, type, location, distance, date, duration);
   }
 
   @Command(description = "Get all users details")

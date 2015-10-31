@@ -1,6 +1,8 @@
 package utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import com.bethecoder.ascii_table.ASCIITable;
@@ -83,6 +85,19 @@ public class Print
         index++;
       }
       ASCIITable.getInstance().printTable(header, data);
+    }
+  }
+  
+  private static String convertDateToString(Date d) 
+  {
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    try {
+      String date = formatter.format(d);
+      return date;
+    } catch (Exception e) {
+      //e.printStackTrace();
+      System.out.println("Date/Time could not be parsed. For now setting the current date/time instead.");
+      return "";
     }
   }
 }

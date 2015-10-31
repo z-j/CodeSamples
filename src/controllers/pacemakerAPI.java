@@ -1,11 +1,12 @@
 package controllers;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Optional;
@@ -13,6 +14,7 @@ import com.google.common.base.Optional;
 import models.Activity;
 import models.Location;
 import models.User;
+import utils.Print;
 import utils.Serializer;
 
 public class pacemakerAPI
@@ -92,13 +94,13 @@ public class pacemakerAPI
     return userIndex.get(id);
   }
 
-  public Activity addActivity(Long id, String type, String location, double distance)
+  public Activity addActivity(Long id, String type, String location, double distance, String date, String duration)
   {
     Activity activity = null;
     Optional<User> user = Optional.fromNullable(userIndex.get(id));
     if (user.isPresent())
     {
-      activity = new Activity(type, location, distance);
+      activity = new Activity(type, location, distance, date, duration);
       // user.get().activities.put(activity.id, activity);
       user.get().activities.add(activity);
       activityIndex.put(activity.id, activity);
@@ -106,18 +108,20 @@ public class pacemakerAPI
     return activity;
   }
 
-  public User getSortedActivities(Long id, String SortBy)
+  public User getSortedActivities(Long id, String sortBy)
   {
 
     //Iterator<Long> s = userIndex.keySet().iterator();
     //while (s.hasNext()){
     User u = userIndex.get(id);
     System.out.println("user id"+id);
-    
+
     if (u !=null && u.activities != null && u.activities.size() > 0)
     {
       System.out.println(u.activities.size() + "," + u.activities.get(0).id);
-      Collections.sort(u.activities, Activity.getSortedOnType());
+      this.sortActivities(u, sortBy);
+
+
       System.out.println(u.activities.size() + "," + u.activities.get(0).id);
     } else {
       System.out.println("either null or 0 size");
@@ -126,6 +130,24 @@ public class pacemakerAPI
 
     //}
     return u;
+  }
+
+  private void sortActivities(User u, String sortBy) {
+
+    if("type".equals(sortBy)) {
+      Collections.sort(u.activities, Activity.getSortedOnType());
+    } else if("date".equals(sortBy)) {
+      Collections.sort(u.activities, Activity.getSortedOnDate());
+    } else if("location".equals(sortBy)) {
+      Collections.sort(u.activities, Activity.getSortedOnLocation());
+    } else if("distance".equals(sortBy)) {
+      Collections.sort(u.activities, Activity.getSortedOnDistance());
+    } else if("duration".equals(sortBy)) {
+      Collections.sort(u.activities, Activity.getSortedOnDuration());
+    } else {
+      Print.printNoData("Sort By Parameter is not correct.");
+    }
+
   }
 
   public Activity getActivity(Long id)
@@ -167,5 +189,7 @@ public class pacemakerAPI
     serializer.write();
     System.out.println("storage:" + userIndex.size() + "," + emailIndex.size() + "," + activityIndex.size());
   }
+  
+
 
 }
