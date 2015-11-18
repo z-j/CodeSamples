@@ -105,7 +105,7 @@ public class YAMLSerializer implements Serializer
     {
       writer = new YamlWriter(new FileWriter(file));
       writer.write(stack);
-      writer.close();
+      //writer.close();
     }
     finally
     {
