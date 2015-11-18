@@ -25,7 +25,7 @@ public class Main
       @Param(name = "email") String email, @Param(name = "password") String password)
   {
     User u = paceApi.createUser(firstName, lastName, email, password);
-    Print.printNoData("User created successfully with id: "+u.id);
+    Print.printNoData("User created successfully with id : "+u.id);
   }
 
   @Command(description = "Get all users details")
